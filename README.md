@@ -101,7 +101,7 @@ The `cout.print_domains()` table converts a numeric value to a text level:
 | `dnstwist.run` was not found | The `dnstwist` package is not installed or is installed as a CLI utility | Install via `pip install dnstwist` or adapt the code to invoke the system command |
 | `Netlas API key invalid`                    | Invalid or expired key | Check the key in your **Netlas** account, create a new one |
 | `Failed connection with domain`             | The domain is not responding via HTTP/HTTPS | Check the availability of the domain in the browser. Some resources block bots |
-| `list index out of range` in `cout.print_domains` | `wrong_domains` contains values greater than 3 or non-numeric | Check the source data: `wrong_domains` should be `dict[domain, int]` from 0 to 3 |
+| `list index out of range` in `cout.print_domains` | `wrong_domains` contains values greater than 3 or non-numeric | Check the source data: `wrong_domains` should be `dict[domain, int]`|
 
 ## 🤝 License and authorship
 
