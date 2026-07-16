@@ -22,13 +22,13 @@ The tool combines several methods: domain mutation generation, subdomain search 
 
 ## ✨ Features
 
-- Generation and search of domain mutations — uses dnstwist to create similar domains (typosquatting, homoglyphs, etc.) and verifies their existence through Netlas.
-- Subdomain search by brand — searches for subdomains of the brandname type.* at level 3-4, excluding legitimate top domains.
-- WHOIS verification — verifies registration data (organization, phone, email) with reference data.
+- **Generation and search of domain mutations** — uses dnstwist to create similar domains (typosquatting, homoglyphs, etc.) and verifies their existence through Netlas.
+- **Subdomain search by brand** — searches for subdomains of the brandname type.* at level 3-4, excluding legitimate top domains.
+- **WHOIS verification** — verifies registration data (organization, phone, email) with reference data.
 - Double checking of suspicious domains:
-- Detection of official images (based on links from the perimeter)
-- Search for keywords (brand terms) on the page
-- Criticality score — each domain gets a rank from Legitimate (0) to High (3).
+  - **Detection of official images** (based on links from the perimeter)
+  - **Search for keywords** (brand terms) on the page
+  - **Criticality score** — each domain gets a rank from Legitimate (0) to High (3).
 - A beautiful output to the console is a table with a color indication of danger (rich library).
 
 > [!NOTE]
