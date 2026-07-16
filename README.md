@@ -11,27 +11,21 @@ such as `Phishing` and `Shadow-IT`
 
 **Tool for detecting phishing resources and Shadow IT services in enterprise environments**
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 4f4c533e707e3c8f4efee1aae7c9e6cc0118e3d4
 ## 🎯 Description
 
-<<<<<<< HEAD
 **PHISHER** is a command-line utility for automated detection of:
 - **Phishing domains and pages** — using signatures, trusted resource lists, SSL certificate analysis, and brand similarity checks.
 - **Shadow IT** — unauthorized cloud services, SaaS applications, unregistered subdomains, and third-party tools used within the company.
 The tool combines several methods: domain mutation generation, subdomain search by brand names, WHOIS data analysis, and image/keyword verification.
 
-<<<<<<< HEAD
 The tool combines several methods: domain mutation generation, subdomain search by brand names, WHOIS data analysis, and image/keyword verification.
-=======
+
 **FISHER** is a command-line utility for automated detection of:
 - **Phishing domains and pages** — using `signatures`, `trusted resource` lists, `SSL certificate` analysis, and `brand similarity` checks.
 - **Shadow IT** — unauthorized `cloud services`, `SaaS applications`, `unregistered subdomains`, and `third-party tools` used within the company.
 
 The tool combines several methods: `domain mutation` generation, `subdomain search` by brand names, `WHOIS data` analysis, and `image/keyword` verification.
->>>>>>> 24f010c408286153ac31440f06cd70fa8ced5286
+
 
 ## ✨ Features
 
@@ -45,7 +39,7 @@ The tool combines several methods: `domain mutation` generation, `subdomain sear
 - A beautiful output to the console is a table with a color indication of danger (`rich` library).
 
 > [!NOTE]
-> **Note**: An active API key is required for the service. Netlas.io (registration is free, but there are limits on the number of requests)
+> **Note**: An active `API key` is required for the service. `netlas.io` (registration is free, but there are limits on the number of requests)
 
 ## 🚀 Installation
 
@@ -57,8 +51,7 @@ git clone https://github.com/your-org/fisher.git
 cd fisher
 pip install -r requirements.txt
 python setup.py install
-<<<<<<< HEAD
-=======
+```
 
 ## ✨ Features
 
@@ -82,6 +75,7 @@ Manual installation (`PIP` is recommended):
 #!/bin/bash
     pip install netlas dnstwist beautifulsoup4 requests rich
 ```
+
 > [!TIP]
 > `dnstwist` may require the compilation of C extensions. If problems arise, install the dnstwist system package (for example, `sudo apt install dnstwist`), but the code uses the `dnstwist.run()` call, which the Python module expects. In this case, adaptation will be required.
 
@@ -151,7 +145,3 @@ The license is not specified in the source files, but it is intended to be used 
 
 > [!CAUTION]
 > 🐟 `Phisher` helps to detect digital threats and unauthorized resources in a timely manner. Use it as part of the perimeter monitoring process.
->>>>>>> 4f4c533e707e3c8f4efee1aae7c9e6cc0118e3d4
-=======
-```
->>>>>>> 24f010c408286153ac31440f06cd70fa8ced5286
