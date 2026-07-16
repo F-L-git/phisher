@@ -20,7 +20,7 @@ The tool combines several methods: domain mutation generation, subdomain search 
 
 The tool combines several methods: domain mutation generation, subdomain search by brand names, WHOIS data analysis, and image/keyword verification.
 
-**FISHER** is a command-line utility for automated detection of:
+**PHISHER** is a command-line utility for automated detection of:
 - **Phishing domains and pages** — using `signatures`, `trusted resource` lists, `SSL certificate` analysis, and `brand similarity` checks.
 - **Shadow IT** — unauthorized `cloud services`, `SaaS applications`, `unregistered subdomains`, and `third-party tools` used within the company.
 
