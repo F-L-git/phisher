@@ -1,6 +1,6 @@
 # PHISHER 🐠
 Development of tools for identifying resources 
-such as “Phishing” and “Shadow-IT”
+such as `Phishing` and `Shadow-IT`
 
 ██████╗░██╗░░██╗██╗░██████╗██╗░░██╗███████╗██████╗░
 ██╔══██╗██║░░██║██║██╔════╝██║░░██║██╔════╝██╔══██╗
@@ -9,7 +9,7 @@ such as “Phishing” and “Shadow-IT”
 ██║░░░░░██║░░██║██║██████╔╝██║░░██║███████╗██║░░██║
 ╚═╝░░░░░╚═╝░░╚═╝╚═╝╚═════╝░╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝
 
-**Tool for detecting phishing resources and Shadow IT services in enterprise environments.**
+**Tool for detecting phishing resources and Shadow IT services in enterprise environments**
 
 <<<<<<< HEAD
 
@@ -17,6 +17,7 @@ such as “Phishing” and “Shadow-IT”
 >>>>>>> 4f4c533e707e3c8f4efee1aae7c9e6cc0118e3d4
 ## 🎯 Description
 
+<<<<<<< HEAD
 **PHISHER** is a command-line utility for automated detection of:
 - **Phishing domains and pages** — using signatures, trusted resource lists, SSL certificate analysis, and brand similarity checks.
 - **Shadow IT** — unauthorized cloud services, SaaS applications, unregistered subdomains, and third-party tools used within the company.
@@ -24,17 +25,24 @@ The tool combines several methods: domain mutation generation, subdomain search 
 
 <<<<<<< HEAD
 The tool combines several methods: domain mutation generation, subdomain search by brand names, WHOIS data analysis, and image/keyword verification.
+=======
+**FISHER** is a command-line utility for automated detection of:
+- **Phishing domains and pages** — using `signatures`, `trusted resource` lists, `SSL certificate` analysis, and `brand similarity` checks.
+- **Shadow IT** — unauthorized `cloud services`, `SaaS applications`, `unregistered subdomains`, and `third-party tools` used within the company.
+
+The tool combines several methods: `domain mutation` generation, `subdomain search` by brand names, `WHOIS data` analysis, and `image/keyword` verification.
+>>>>>>> 24f010c408286153ac31440f06cd70fa8ced5286
 
 ## ✨ Features
 
-- Generation and search of domain mutations — uses dnstwist to create similar domains (typosquatting, homoglyphs, etc.) and verifies their existence through Netlas.
-- Subdomain search by brand — searches for subdomains of the brandname type.* at level 3-4, excluding legitimate top domains.
-- WHOIS verification — verifies registration data (organization, phone, email) with reference data.
+- **Generation and search of domain mutations** — uses dnstwist to create similar domains (typosquatting, homoglyphs, etc.) and verifies their existence through `Netlas`.
+- **Subdomain search by brand** — searches for subdomains of the brandname type.* at level 3-4, excluding legitimate top domains.
+- **WHOIS verification** — verifies registration data (organization, phone, email) with reference data.
 - Double checking of suspicious domains:
-- Detection of official images (based on links from the perimeter)
-- Search for keywords (brand terms) on the page
-- Criticality score — each domain gets a rank from Legitimate (0) to High (3).
-- A beautiful output to the console is a table with a color indication of danger (rich library).
+  - **Detection of official images** (based on links from the perimeter)
+  - **Search for keywords** (brand terms) on the page
+  - **Criticality score** — each domain gets a rank from `Legitimate (0)` to `High (3)`.
+- A beautiful output to the console is a table with a color indication of danger (`rich` library).
 
 > [!NOTE]
 > **Note**: An active API key is required for the service. Netlas.io (registration is free, but there are limits on the number of requests)
@@ -49,6 +57,7 @@ git clone https://github.com/your-org/fisher.git
 cd fisher
 pip install -r requirements.txt
 python setup.py install
+<<<<<<< HEAD
 =======
 
 ## ✨ Features
@@ -143,3 +152,6 @@ The license is not specified in the source files, but it is intended to be used 
 > [!CAUTION]
 > 🐟 `Phisher` helps to detect digital threats and unauthorized resources in a timely manner. Use it as part of the perimeter monitoring process.
 >>>>>>> 4f4c533e707e3c8f4efee1aae7c9e6cc0118e3d4
+=======
+```
+>>>>>>> 24f010c408286153ac31440f06cd70fa8ced5286
