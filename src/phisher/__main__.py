@@ -15,10 +15,8 @@ def main():
 
     # Processing command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("-p", "--perimeter",
-                        help="Path to file with perimeter data", required=True)
-    parser.add_argument(
-        "-a", "--apikey", help="Personal Netlas API key", required=True)
+    parser.add_argument("-p", "--perimeter", help="Path to file with perimeter data", required=True)
+    parser.add_argument("-a", "--apikey", help="Personal Netlas API key", required=True)
     args = parser.parse_args()
 
     # Processing
@@ -42,7 +40,7 @@ def main():
     correct_domains, wrong_domains = registrant.search(
         domains=potential_phishing, whois_data=perimeter.whois
     )
-
+    
     potential_phishing = registrant.domain_double_check(
         true_links=perimeter.imglinks,
         keywords=perimeter.keywords,
@@ -51,8 +49,7 @@ def main():
 
     # Add correct domains
     if correct_domains:
-        wrong_domains.update(
-            {k: v for k, v in correct_domains.items() if k not in wrong_domains})
+        wrong_domains.update(correct_domains)
 
     # Print phishing domains
     print("\n")
