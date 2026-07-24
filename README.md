@@ -124,7 +124,7 @@ The `cout.print_domains()` table converts a numeric value to a text level:
 | 2 | `Medium` | WHOIS mismatch + one additional feature (image or keyword)          |
 | 3 | `High` | WHOIS mismatch + both signs (image + keywords) → high probability of phishing |
 
-![output_example](src/phisher-console-output.png)
+![output_example](docs/phisher-console-output.png)
 
 > **Note:** The `Critical` level (4) is not reached in the current implementation, but is reserved in the code.
 
