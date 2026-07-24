@@ -1,0 +1,40 @@
+# config.yaml
+app:
+  name: "PHISHER"
+  version: "1.0.1"
+
+pipeline:
+  steps:
+    - domain_mutations
+    - subdomains
+    - whois_check
+    - double_check
+
+domain_mutations:
+  max_query_operands: 100
+  sleep_between_requests: 1
+
+subdomains:
+  max_level: 4
+  sleep_between_requests: 1
+
+whois:
+  sleep_between_requests: 1
+
+double_check:
+  max_depth: 1
+  max_urls_per_domain: 5
+  timeout: 5
+
+netlas:
+  api_key: ${NETLAS_API_KEY} # берётся из переменной окружения
+  base_url: "https://netlas.io/api"
+
+http:
+  timeout: 10
+  retries: 3
+  backoff_factor: 1.0
+
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

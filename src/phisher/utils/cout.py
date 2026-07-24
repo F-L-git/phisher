@@ -36,6 +36,7 @@ def print_banner():
     console.print(Text(
         "Usage: python phisher [input_file] [api_key]", style="bold", justify="center"))
 
+
 def print_domains(domains_criticality=None):
     if not domains_criticality:
         domains_criticality = {
@@ -73,12 +74,17 @@ def print_domains(domains_criticality=None):
         "Critical": "red"
     }
 
-    # Populate the table with domain-criticality pairs with colored text
     for domain, criticality_value in sorted_domains:
-        criticality_name = criticality_values[int(criticality_value)]
+        # Приводим к int, если возможно
+        try:
+            crit = int(criticality_value)
+        except (ValueError, TypeError):
+            crit = 0
+        # Ограничиваем диапазон
+        crit = max(0, min(crit, len(criticality_values)-1))
+        criticality_name = criticality_values[crit]
         criticality_label = f"[{criticality_colors[criticality_name]}]{criticality_name}[/]"
         table.add_row(domain, criticality_label)
-
     console.print(table)
 
 
@@ -93,5 +99,5 @@ def print_percents(total: int):
 
 
 # Example usage:
-#print_banner()
-#print_domains({"123.ru":"0", "qwe.com":"3"})
+# print_banner()
+# print_domains({"123.ru":"0", "qwe.com":"3"})
