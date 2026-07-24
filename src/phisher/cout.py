@@ -1,3 +1,5 @@
+from typing import Dict, Optional
+
 from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
@@ -36,24 +38,24 @@ def print_banner():
     console.print(Text(
         "Usage: python phisher [input_file] [api_key]", style="bold", justify="center"))
 
-def print_domains(domains_criticality=None):
+
+def print_domains(domains_criticality: Optional[Dict[str, int]] = None) -> None:
     if not domains_criticality:
         domains_criticality = {
-            "example.com": "Legitimate",
-            "example.org": "Low",
-            "example.net": "Medium",
-            "example.edu": "High",
-            "example.gov": "Critical"
+            "example.com": 0,
+            "example.org": 1,
+            "example.net": 2,
+            "example.edu": 3,
+            "example.gov": 4
         }
 
-    # Sort domains by criticality level
-    sorted_domains = sorted(domains_criticality.items(), key=lambda x: x[1])
+    # Сортируем по критичности (числовому значению)
+    sorted_domains = sorted(domains_criticality.items(
+    ), key=lambda x: x[1] if isinstance(x[1], (int, float)) else 0)
 
-    # Determine maximum lengths for domain and criticality for proper table formatting
     max_domain_length = max(len(domain) for domain, _ in sorted_domains)
     max_column_length = max(max_domain_length, 10)
 
-    # Create a table with appropriate width and column formatting
     table = Table(title="Domains List", style="cyan",
                   title_style="bold", width=max_column_length * 2 + 10)
     table.add_column("Domains", style="bold",
@@ -61,10 +63,7 @@ def print_domains(domains_criticality=None):
     table.add_column("Criticality", style="bold",
                      width=max_column_length + 10, justify="center")
 
-    # Define criticality values
     criticality_values = ["Legitimate", "Low", "Medium", "High", "Critical"]
-
-    # Map criticality values to color gradients
     criticality_colors = {
         "Legitimate": "green",
         "Low": "blue",
@@ -73,9 +72,21 @@ def print_domains(domains_criticality=None):
         "Critical": "red"
     }
 
-    # Populate the table with domain-criticality pairs with colored text
     for domain, criticality_value in sorted_domains:
-        criticality_name = criticality_values[int(criticality_value)]
+        # ==== ЗАЩИТА ====
+        if not isinstance(criticality_value, int):
+            # Если не число, логируем и приравниваем к 0 (или можно к 1)
+            console.log(
+                f"[yellow]Warning: non-integer criticality for {domain}: {criticality_value}, setting to 0[/]")
+            criticality_value = 0
+        # Если число вне диапазона, тоже корректируем
+        if criticality_value < 0 or criticality_value >= len(criticality_values):
+            console.log(
+                f"[yellow]Warning: criticality {criticality_value} out of range for {domain}, clamping to 0[/]")
+            criticality_value = 0
+        # ==================
+
+        criticality_name = criticality_values[criticality_value]
         criticality_label = f"[{criticality_colors[criticality_name]}]{criticality_name}[/]"
         table.add_row(domain, criticality_label)
 
@@ -93,5 +104,5 @@ def print_percents(total: int):
 
 
 # Example usage:
-#print_banner()
-#print_domains({"123.ru":"0", "qwe.com":"3"})
+# print_banner()
+# print_domains({"123.ru":"0", "qwe.com":"3"})

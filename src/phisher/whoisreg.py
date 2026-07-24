@@ -1,7 +1,11 @@
 import json
 from time import sleep
+from typing import Dict, List
 
+from bs4 import BeautifulSoup
 from netlas import Netlas
+import requests
+from rich import _console
 
 from links_check import FindLinks
 from keywords import Keywords
@@ -36,55 +40,60 @@ class WhoisIdentification:
                     return True
         return False
 
-    # Returns two lists: correct and incorrect resources - according to the received registration data.
+    @staticmethod
+    def search(domain: str, keywords: List[str]) -> Dict[str, int]:
+        """
+        Пытается получить страницу сначала по HTTPS, при неудаче – по HTTP.
+        Возвращает словарь {keyword: количество вхождений}.
+        """
+        result = {keyword: 0 for keyword in keywords}
+        # Пробуем протоколы по порядку
+        for protocol in ('https', 'http'):
+            try:
+                response = requests.get(f"{protocol}://{domain}", timeout=5)
+                response.encoding = 'utf-8'
+                soup = BeautifulSoup(response.text, 'html.parser')
+                text = soup.get_text()
+                for keyword in keywords:
+                    result[keyword] = text.lower().count(keyword.lower())
+                # Если дошли сюда – успех, прерываем цикл
+                break
+            except Exception:
+                # Если ошибка, пробуем следующий протокол
+                continue
+        # Если оба протокола не сработали, возвращаем нули
+        return result
 
-    def search(self, domains: list, whois_data: dict) -> tuple[dict, dict]:
-        correct_domains = dict()  # domains that match the registration data
-        wrong_domains = dict()  # domains that don't match the registration data
-        with Progress() as progress:
-            total_task = progress.add_task("[green]Check whois registrations...", total=len(domains))
-            for domain in domains:
-                count = self.netlas_connection.count(datatype="whois-domain", query=domain)["count"]
-                if count != 0:
-                    iterator = self.netlas_connection.download(
-                        datatype="whois-domain", query=domain, size=count
-                    )
-                    bytes_data = b"".join(iterator)
-                    results = parse_jsons(bytes_data.decode("utf-8"))
-                    for result in results:
-                        if self._check_registration_data(result["data"], whois_data):
-                            correct_domains[result["data"]["domain"]] = 0
-                        else:
-                            if result["data"]["domain"] not in wrong_domains:
-                                wrong_domains[result["data"]["domain"]] = 1
-                progress.update(total_task, advance=1)
-                sleep(1)
-                
-        return correct_domains, wrong_domains
-    
     # Evaluates pages of wrong domains for the occurrence of official images and keywords
     # Returns a dict() of invalid domains with a criticality score (1 - 3)
+
     @staticmethod
-    def domain_double_check(true_links: list, keywords: list, wrong_domains: dict) -> dict:
-        for w_domain in wrong_domains:
+    def domain_double_check(true_links: List[str], keywords: List[str], wrong_domains: Dict[str, int]) -> Dict[str, int]:
+        finder = FindLinks()
+        for w_domain in list(wrong_domains.keys()):
             try:
-                suspicious_links = FindLinks().check_resources(w_domain)
+                # Ограничиваем глубину и количество обрабатываемых URL
+                suspicious_links = finder.check_resources(
+                    w_domain, max_depth=1, max_urls=5)
                 for link in suspicious_links:
                     if link in true_links:
                         wrong_domains[w_domain] += 1
                         break
-            except:
-                print(f"Failed connection with {w_domain}")
+            except Exception as e:
+                _console.log(
+                    f"[red]Error checking resources for {w_domain}: {e}[/]")
 
             occurrences = Keywords.search(w_domain, keywords)
-            for occur in occurrences:
-                if occurrences[occur] > 0:
-                    wrong_domains[w_domain] += 1
-                    break
+            # Если хотя бы одно ключевое слово найдено – увеличиваем счётчик
+            if any(count > 0 for count in occurrences.values()):
+                wrong_domains[w_domain] += 1
+
         return wrong_domains
 
+
 # Example for debugging
-input_domains = ["bspb.ru", "www.bspb.ru", "travel.bspb.ru"," margin.fx.bspb.ru"]
+input_domains = ["bspb.ru", "www.bspb.ru",
+                 "travel.bspb.ru", " margin.fx.bspb.ru"]
 whoisreg = {
     "organisation": ['PJSC "Bank "Saint-Petersburg"'],
     "email": [],
@@ -97,9 +106,9 @@ if __name__ == "__main__":
     correct_domains, wrong_domains = registrant.search(
         domains=input_domains, whois_data=whoisreg
     )
-    wrong_domains['bspb.ru'] = 1 # just for an example
+    wrong_domains['bspb.ru'] = 1  # just for an example
     print(wrong_domains)
-    
+
     real_links = FindLinks().check_resources('bspb.ru')
     wrong_domains = registrant.domain_double_check(
         true_links=real_links,
@@ -107,4 +116,3 @@ if __name__ == "__main__":
         wrong_domains=wrong_domains
     )
     print(wrong_domains)
-    
