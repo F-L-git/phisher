@@ -3,8 +3,7 @@ name: Publish Docker image
 on:
   push:
     branches: [main]
-  release:
-    types: [published]
+  workflow_dispatch: # позволяет запускать вручную из любой ветки
 
 env:
   REGISTRY: ghcr.io
@@ -17,11 +16,11 @@ jobs:
       packages: write
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      # Преобразуем имя репозитория в нижний регистр
-      - name: Set lowercase repository name
+      # Приводим имя репозитория к нижнему регистру и сохраняем в переменную окружения
+      - name: Set repository name to lowercase
         run: echo "REPO_LOWER=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
 
       - name: Log in to GitHub Container Registry
@@ -31,7 +30,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
