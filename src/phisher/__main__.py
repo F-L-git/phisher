@@ -7,6 +7,7 @@ from phisher.adapters.netlas_adapter import NetlasAdapter
 from phisher.adapters.dnstwist_adapter import DnstwistAdapter
 from phisher.core.pipeline import Pipeline
 from phisher.models.perimeter import Perimeter
+from phisher.utils.export import export_domains
 from phisher.utils.inparse import read
 import phisher.utils.cout as cout
 
@@ -28,6 +29,11 @@ def main():
     parser.add_argument(
         "-a", "--apikey", help="Netlas API key", required=False)
     args = parser.parse_args()
+
+    # Добавляем аргументы
+    parser.add_argument("--output", "-o", help="Output file path (optional)")
+    parser.add_argument("--format", "-f", choices=["json", "csv", "console"], default="console",
+                        help="Output format: console (default), json, csv")
 
     # Получаем API ключ
     api_key = args.apikey or os.environ.get(
@@ -61,8 +67,12 @@ def main():
     wrong_domains = pipeline.run(perimeter.dict())
 
     # Печатаем результат
-    cout.print_domains(wrong_domains)
+    if args.format == "console":
+        cout.print_domains(wrong_domains)
+    else:
+        export_domains(wrong_domains, args.format, args.output)
 
 
+`
 if __name__ == "__main__":
     main()
