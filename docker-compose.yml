@@ -1,0 +1,10 @@
+version: '3'
+services:
+  phisher:
+    image: flgit/phisher:latest
+    volumes:
+      - ./perimeter.json:/perimeter.json
+      - ./results:/results
+    environment:
+      - NETLAS_API_KEY=${NETLAS_API_KEY}
+    command: -p /perimeter.json -o /results/out.json -f json

@@ -38,3 +38,7 @@ http:
 logging:
   level: INFO
   format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+export:
+  default_format: console # console, json, csv
+  default_output: results.json
