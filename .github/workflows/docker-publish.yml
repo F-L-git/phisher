@@ -8,6 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push:
@@ -37,3 +38,4 @@ jobs:
           context: .
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.REPO_LOWER }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
