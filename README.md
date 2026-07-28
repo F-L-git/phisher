@@ -3,13 +3,6 @@
 Development of tools for identifying resources
 such as `Phishing` and `Shadow-IT`
 
-██████╗░██╗░░██╗██╗░██████╗██╗░░██╗███████╗██████╗░
-██╔══██╗██║░░██║██║██╔════╝██║░░██║██╔════╝██╔══██╗
-██████╔╝███████║██║╚█████╗░███████║█████╗░░██████╔╝
-██╔═══╝░██╔══██║██║░╚═══██╗██╔══██║██╔══╝░░██╔══██╗
-██║░░░░░██║░░██║██║██████╔╝██║░░██║███████╗██║░░██║
-╚═╝░░░░░╚═╝░░╚═╝╚═╝╚═════╝░╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝
-
 ## Tool for detecting phishing resources and Shadow IT services in enterprise environments
 
 ## 🎯 Description
